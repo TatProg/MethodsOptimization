@@ -46,13 +46,9 @@ def issled_poisk(x0, delta_x):
             i = n
     if x_list[i][1] > x_list[0][1]:
         # step 5
-        x_zero = [0, 0]
-        x_zero = x_list[0][0]
-        print(x_zero)
-        x_point = [0, 0]
-        x_point = x_list[i][0]
-        print(x_point)
-        return x_zero, x_point  #FIXME TypeError: cannot unpack non-iterable NoneType object
+        super_point = [x_list[0][0], x_list[i][0]]
+        return super_point
+        # return x_zero, x_point  #fixme TypeError: cannot unpack non-iterable NoneType object
     else:
         # step 4
         end_of_search(x_list[i][0], delta_x)
@@ -75,13 +71,15 @@ def end_of_search(x, delta_x):
 def step_6(x0, x, delta_x):
     xp = poisk_po_obrazu(x0, x)
     f_xp = f(xp)
-    x_zero, x_k_plus_1 = issled_poisk(xp, delta_x)
+    super_point = issled_poisk(xp, delta_x)
+    x_zero = super_point[0]
+    x_k_plus_1 = super_point[1]
     if f(x_k_plus_1) < f(x):
         # go to step 5
         step_6(x, x_k_plus_1, delta_x)
     else:
         # go to step 4
-        end_of_search(x, delta_x)
+        end_of_search(x, delta_x) # FIXME TypeError: cannot unpack non-iterable NoneType object
 
 
 # def hj():
@@ -108,5 +106,7 @@ delta_x = [2, 2]
 #     # уменьшение шага (шагов) в десять раз от начальной длины
 #     # поэтому ограничение на шаги будет 10
 #     iterations = 0
-x_zero, x_test = issled_poisk(x0, delta_x)
+super_point = issled_poisk(x0, delta_x)
+x_zero = super_point[0]
+x_test = super_point[1]
 step_6(x_zero, x_test, delta_x)

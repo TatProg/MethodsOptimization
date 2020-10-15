@@ -55,7 +55,7 @@ def show_function():
 # Начало программного кода
 gradient_show()
 
-# 1 задание - постройка графика, не ебу как менять цвет
+# 1 задание - постройка графика
 x, y, z = show_function()
 fig = pylab.figure()
 axes = Axes3D(fig)
