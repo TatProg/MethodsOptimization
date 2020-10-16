@@ -1,8 +1,4 @@
 from math import *
-import pylab
-from mpl_toolkits.mplot3d import Axes3D
-import numpy
-from pprint import pprint
 
 
 def f(x):
@@ -48,7 +44,7 @@ def issled_poisk(x0, delta_x, iterations):
         # step 5
         super_point = [x_list[0][0], x_list[i][0]]
         return super_point
-        # return x_zero, x_point  #fixme TypeError: cannot unpack non-iterable NoneType object
+        # return x_zero, x_point  #fixed? TypeError: cannot unpack non-iterable NoneType object
     else:
         # step 4
         end_of_search(x_list[i][0], delta_x, iterations)
@@ -85,7 +81,7 @@ def step_6(x0, x, delta_x, iterations):
         step_6(x, x_k_plus_1, delta_x, iterations)
     else:
         # go to step 4
-        end_of_search(x, delta_x)  # FIXME TypeError: cannot unpack non-iterable NoneType object
+        end_of_search(x, delta_x)  # FIXED? TypeError: cannot unpack non-iterable NoneType object
 
 
 def step_2(x0, delta_x, iterations):

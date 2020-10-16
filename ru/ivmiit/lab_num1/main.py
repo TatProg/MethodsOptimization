@@ -41,9 +41,11 @@ def dihotom_method(a, b):
     else:
         # step 5
         l_k = z_k - a
+        # step 5 a
         if l_k <= 2 * epsilon:
             x = (z_k + a) / 2
             return x
+        # step 5 b
         else:
             return dihotom_method(a, z_k)
 
@@ -68,7 +70,7 @@ def powell_func_second(y, x1, x2, x3, step):
     # step 4
     f_min = min(y(x1), y(x2), y(x3))
     x_min = get_x_by_y(f_min)
-    # step 5
+    # step 5 квадратичная апроксимация
     a1 = (y(x2) - y(x1)) / (x2 - x1)
     a1 = round(a1, 12)
     a2 = (1 / (x3 - x2) * ((y(x3) - y(x1)) / (x3 - x1) - (y(x2) - y(x1)) / (x2 - x1)))
@@ -87,10 +89,14 @@ def newton_func(x0):
     global counter_newton
     counter_newton += 1
     xn = x0
+    # step 2
     xn = xn - df(xn) / ddf(x)
+    # step 3
     if abs(df(xn)) <= epsilon:
+        # end
         return xn
     else:
+        # go to step 2
         newton_func(xn)
 
 

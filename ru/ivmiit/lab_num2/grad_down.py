@@ -25,6 +25,7 @@ def func_deriv(x):
 def gradient_down(x_0, x_1):
     f_x_0 = func_deriv(x_0)
     for i in range(len(x_1)):
+        # step 2. Формула со слайда №33
         x_1[i] = x_0[i] - b * f_x_0[i]
         x_1[i] = round(x_1[i], 12)
     return x_0, x_1
@@ -35,6 +36,7 @@ def gradient_show():
     x_1 = [0, 1]
     x_0, x_1 = gradient_down(x_0, x_1)
     iteration = 1
+    # step 3. Пятая формула со слайда №31
     while abs(func(x_1) - func(x_0)) > e:
         iteration += 1
         x_1, x_0 = gradient_down(x_0, x_1)
