@@ -1,7 +1,7 @@
+from math import *
 import pylab
 from mpl_toolkits.mplot3d import Axes3D
 import numpy
-from math import *
 from pprint import pprint
 
 
@@ -23,7 +23,7 @@ def poisk_po_obrazu(x_prev, x_current):
 
 
 # step 2
-def issled_poisk(x0, delta_x):
+def issled_poisk(x0, delta_x, iterations):
     x_list = []
     for i in range(9):
         x_list.append([])
@@ -51,52 +51,50 @@ def issled_poisk(x0, delta_x):
         # return x_zero, x_point  #fixme TypeError: cannot unpack non-iterable NoneType object
     else:
         # step 4
-        end_of_search(x_list[i][0], delta_x)
+        end_of_search(x_list[i][0], delta_x, iterations)
 
 
 # step 4
-def end_of_search(x, delta_x):
-    if count_delta_x(x) < 0.1:  # TODO add iteration limit = 10
-        # end of search
-        print(x)
-        return x
+def end_of_search(x, delta_x, iterations):
+    iterations += 1
+    if iterations == 10:
+        # end of search because of operation limits
+        print("end of search because of operation limits", x)
+        exit()
     else:
-        # go to step 2
-        delta_x[0] /= 2  # TODO change 2 for a from word doc
-        delta_x[1] /= 2
-        # iterations += 1
-        issled_poisk(x, delta_x)
+        if count_delta_x(x) < 0.1:  # TODO change 0.1 for a from word doc
+            # end of search
+            print("delta_x lower than e", x)
+            exit()
+        else:
+            # go to step 2
+            delta_x[0] /= 2  # TODO change 2 for a from word doc
+            delta_x[1] /= 2
+            # issled_poisk(x, delta_x)
+            step_2(x, delta_x, iterations)
 
 
-def step_6(x0, x, delta_x):
+def step_6(x0, x, delta_x, iterations):
     xp = poisk_po_obrazu(x0, x)
     f_xp = f(xp)
-    super_point = issled_poisk(xp, delta_x)
+    super_point = issled_poisk(xp, delta_x, iterations)
     x_zero = super_point[0]
     x_k_plus_1 = super_point[1]
     if f(x_k_plus_1) < f(x):
         # go to step 5
-        step_6(x, x_k_plus_1, delta_x)
+        step_6(x, x_k_plus_1, delta_x, iterations)
     else:
         # go to step 4
-        end_of_search(x, delta_x) # FIXME TypeError: cannot unpack non-iterable NoneType object
+        end_of_search(x, delta_x)  # FIXME TypeError: cannot unpack non-iterable NoneType object
 
 
-# def hj():
-#     x0 = [0, 1]
-#     delta_x = [2, 2]
-#     a = 2
-#     e = 0.1
-#     fx0 = f(x0)
-#     # на сайте интуита сказано, что удовлетворительным является
-#     # уменьшение шага (шагов) в десять раз от начальной длины
-#     # поэтому ограничение на шаги будет 10
-#     iterations = 0
-#     issled_poisk(x0, delta_x)
-#     step_6(x_zero, x_test, delta_x)
+def step_2(x0, delta_x, iterations):
+    super_point = issled_poisk(x0, delta_x, iterations)
+    x_zero = super_point[0]
+    x_test = super_point[1]
+    step_6(x_zero, x_test, delta_x, iterations)
 
 
-# hj()
 x0 = [0, 1]
 delta_x = [2, 2]
 #     a = 2
@@ -105,8 +103,5 @@ delta_x = [2, 2]
 #     # на сайте интуита сказано, что удовлетворительным является
 #     # уменьшение шага (шагов) в десять раз от начальной длины
 #     # поэтому ограничение на шаги будет 10
-#     iterations = 0
-super_point = issled_poisk(x0, delta_x)
-x_zero = super_point[0]
-x_test = super_point[1]
-step_6(x_zero, x_test, delta_x)
+iterations = 0
+step_2(x0, delta_x, iterations)
