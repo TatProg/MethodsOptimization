@@ -16,14 +16,22 @@ def func(x):
 
 
 # функц вычисления градиента целевой функции - сделал производную по x1 и по x2
-def func_deriv(x):
-    dfdx0 = 6 * x[0] - 12
-    dfdx1 = 2 * x[1] - 8
-    return np.array([dfdx0, dfdx1])
+def func_deriv(x):  # FIXME формула производной из 1 презы 65-66 слайды
+    # dfdx0 = 6 * x[0] - 12
+    # dfdx1 = 2 * x[1] - 8
+    # return np.array([dfdx0, dfdx1])
+    x_low = [0, 0]
+    x_up = [0, 0]
+    dfdx = [0, 0]
+    for i in range(2):
+        x_low[i] = x[i] - b
+        x_up[i] = x[i] + b
+        dfdx[i] = (func(x_up) - func(x_low)) / (2 * b)
+    return dfdx
 
 
 def gradient_down(x_0, x_1):
-    f_x_0 = func_deriv(x_0)
+    f_x_0 = func_deriv(x_0) # FIXME !!!
     for i in range(len(x_1)):
         # step 2. Формула со слайда №33
         x_1[i] = x_0[i] - b * f_x_0[i]

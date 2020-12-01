@@ -22,11 +22,17 @@ def f(x):
 
 
 def df(x):
-    return 2 * x - 4
+    x_low = x - epsilon
+    x_up = x + epsilon
+    test = (f(x_up) - f(x_low)) / (2 * epsilon)
+    return test
 
 
 def ddf(x):
-    return 2
+    x_low = x - epsilon
+    x_up = x + epsilon
+    test = (f(x_low) - 2 * f(x) + f(x_up)) / epsilon**2
+    return test
 
 
 def dihotom_method(a, b):
@@ -90,11 +96,12 @@ def newton_func(x0):
     counter_newton += 1
     xn = x0
     # step 2
-    xn = xn - df(xn) / ddf(x)
+    xnew = xn - (df(xn) / ddf(xn))
+    print("xn ", xn, " . df(x) ", df(xn), " . ddf(xn) ", ddf(xn), " . xnew ", xnew)
     # step 3
-    if abs(df(xn)) <= epsilon:
+    if abs(df(xnew)) <= 0.1:
         # end
-        return xn
+        return xnew
     else:
         # go to step 2
         newton_func(xn)
