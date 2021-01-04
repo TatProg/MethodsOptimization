@@ -10,13 +10,15 @@ def f(x):
 
 
 def grad_f(func, x):
-    return [
-        (func([x[0] + h, x[1]]) - func(x)) / h,
-        (func([x[0], x[1] + h]) - func(x)) / h
+    result = [
+        (f([x[0] + h, x[1]]) - f(x)) / h,
+        (f([x[0], x[1] + h]) - f(x)) / h
     ]
+    return result
 
 
 def grad_speed(grad):
+    # print(grad[0])
     return math.sqrt((grad[0] * grad[0] + grad[1] * grad[1]))
 
 
@@ -65,10 +67,16 @@ def next_x(func, x, d):
     while True:
         t += lam
         prev = curr
-        x_curr = x + t * d
+        test_float1 = x[0] + t * d[0]
+        test_float2 = x[1] + t * d[1]
+        x_curr = [test_float1, test_float2]
+        # x_curr = x + t * d
         curr = func(x_curr)
+        # if f(curr) >= prev:
         if curr >= prev:
-            return x_curr - lam * d
+            x_curr[0] = x_curr[0] - lam * d[0]
+            x_curr[1] = x_curr[1] - lam * d[1]
+            return x_curr  # костыли
 
 
 def search_newton(func, x0):
@@ -85,14 +93,18 @@ def search_newton(func, x0):
             return x, k, track
         H = matrix_hesse(func, x)
         H_1 = np.linalg.inv(H)
-
+        d = []
         if (H_1[0, 0] > 0) and (np.linalg.det(H_1) > 0):
             d = -1 * np.dot(H_1, grad)
         else:
-            d = -1 * grad
+            grad[0] *= -1
+            grad[1] *= -1
+            d = grad
         x_next = next_x(func, x, d)
-
-        if (np.linalg.norm(x_next - x) <= eps2) and (abs(func(x_next) - func(x) <= eps2)):
+        lol_kek = [x_next[0] - x[0], x_next[1] - x[1]]      # еще немного
+        test1 = np.linalg.norm(lol_kek)
+        test2 = abs(func(x_next) - func(x))
+        if test1 <= eps2 and test2 <= eps2:
             return x_next, k, track
         x = x_next
         track.append(x)
@@ -128,7 +140,7 @@ def search_marquardt(func, x0):
 
 
 print('Метод Ньютона-Рафсона:')
-x, n, track = search_newton(f, [1.0, 1.0])
+x, n, track = search_newton(f, [-1.0, 9.0])
 track = np.array(track)
 print('x= ', x, 'f= ', f(x), 'количество итераций=', n)
 ax = draw(f)
@@ -143,4 +155,4 @@ ax.plot3D(track[:, 0], track[:, 1], f([track[:, 0], track[:, 1]]), color='green'
 ax.scatter3D(track[:, 0], track[:, 1], f([track[:, 0], track[:, 1]]), color='green')
 plt.show()
 print('Координаты точки минимума:')
-# print('x=[', 1 / 2, ',', 43 / 8, ']')
+print('x=[', 0.5, ',', 12.3, ']')
