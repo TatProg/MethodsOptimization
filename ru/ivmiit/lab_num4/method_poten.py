@@ -18,3 +18,6 @@ def check_method(matrix, a, b, n):
     else:
         print("Bad. ", cell_check)
 
+
+# --- Вычисление потенциалов для плана перевозки ---
+# def potential_calc(matrix ):

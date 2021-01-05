@@ -1,14 +1,14 @@
 import numpy as np
 
 # Тестовые данные
-test_matrix = np.array([
-    [10, 20, 30, 40],
-    [100, 90, 80, 70],
-    [50, 15, 25, 60],
-    [95, 55, 25, 45]
-])
-test_b = [1000, 1200, 1600, 2000]  # stroka, x, величина спроса
-test_a = [1600, 1000, 1200, 2000]  # stolbec, y, объем производства
+# test_matrix = np.array([
+#     [10, 20, 30, 40],
+#     [100, 90, 80, 70],
+#     [50, 15, 25, 60],
+#     [95, 55, 25, 45]
+# ])
+# test_b = [1000, 1200, 1600, 2000]  # stroka, x, величина спроса
+# test_a = [1600, 1000, 1200, 2000]  # stolbec, y, объем производства
 
 
 # --- Формирование опорного плана методом двойного предпочтения ---
@@ -101,7 +101,7 @@ def check_all_zeros(a):
 
 # Импортировать, а затем вызвать метод
 def find_op_plan(test_matrix_1, a, b, n):
-    test_matrix_2 = double_trouble(test_matrix, n)
+    test_matrix_2 = double_trouble(test_matrix_1, n)
     test_matrix_3 = np.zeros((n, n))
     final_matrix = double_barrel(test_matrix_1, test_matrix_2, test_matrix_3, a, b, n)
     return final_matrix
