@@ -1,11 +1,13 @@
 import numpy as np
 
-test_matrix = np.array([
-    [10, 20, 30, 40],
-    [100, 90, 80, 70],
-    [50, 15, 25, 60],
-    [95, 55, 77, 45]
-])
+
+# Тестовые данные
+# test_matrix = np.array([
+#     [10, 20, 30, 40],
+#     [100, 90, 80, 70],
+#     [50, 15, 25, 60],
+#     [95, 55, 77, 45]
+# ])
 
 
 def reduction_strings(matrix):
@@ -110,6 +112,8 @@ def kill_lines_with_zero(matrix, matrix_zero):
         # Это хорошо, можно продолжать делить/зонировать, теперь уже учтем тот факт,
         # что при вычеркивании строки/столбца должны вычеркнуть как можно меньше элементов
         return matrix
+
+
 def count_zeros_in_lines(matrix):
     matrix_with_only_zero = np.zeros((matrix.shape[0], matrix.shape[1]))
     for i in range(matrix.shape[0]):
@@ -209,11 +213,33 @@ def hungarian_calc(matrix):
         matrix = reduction_strings(matrix)
         matrix = reduction_columns(matrix)
         return hungarian_calc(matrix)
+    # print(matrix)
     new_matrix = kill_lines_with_zero(matrix, calc_adjacent_zero(matrix))
     new_matrix = kill_lines_accuratly(new_matrix)
-    print(new_matrix)
+    # print(new_matrix)
+    # последний шаг:
+    min_elem = new_matrix.min()
+    last_matrix = new_matrix - min_elem
+    # print(last_matrix)
+    # Костыль. Делаем замену:
+    for q in range(new_matrix.shape[0]):
+        for p in range(new_matrix.shape[1]):
+            for i in range(matrix.shape[0]):
+                for j in range(matrix.shape[1]):
+                    if new_matrix[q][p] == matrix[i][j]:
+                        matrix[i][j] = last_matrix[q][p]
+    # fill_table(matrix)
+    return matrix
 
-    return new_matrix
 
+# def fill_table(matrix):
+#     filled_matrix = np.zeros((matrix.shape[0], matrix.shape[1]))
+#     lab_b = [1000, 1200, 1600]
+#     lab_a = [1600, 1000, 1200]
+#     zil = count_zeros_in_lines(matrix)
+#     zic = count_zeros_in_columns(matrix)
+#     if zil.min() == 1:
+#         index_zil = zil.index(1.0)
+#         for j in range((matrix.shape[1]):
+#             if matrix[index_zil][j]
 
-hungarian_calc(test_matrix)

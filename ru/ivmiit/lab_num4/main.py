@@ -1,6 +1,7 @@
 import numpy as np
 import ru.ivmiit.lab_num4.op_plan_double_pred as op_double
 import ru.ivmiit.lab_num4.op_plan_min_element as min_element
+import ru.ivmiit.lab_num4.method_hungarian as hun_method
 
 # Тестовые данные
 # test_matrix = np.array([
@@ -38,3 +39,11 @@ lab_n = 3
 # [[ 400.  600.    0.]
 #  [1200.    0.    0.]
 #  [   0.  400. 1200.]]
+
+print(hun_method.hungarian_calc(lab_matrix))
+# lab_op_plan = np.array([
+#     [400, 600, 0],
+#     [1200, 0, 0],
+#     [0, 400, 1200]
+# ])
+#
