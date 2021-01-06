@@ -20,4 +20,4 @@ def check_method(matrix, a, b, n):
 
 
 # --- Вычисление потенциалов для плана перевозки ---
-# def potential_calc(matrix ):
+# def potential_calc(matrix, a, b, n): # todo this method
